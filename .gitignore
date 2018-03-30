@@ -1,3 +1,4 @@
 .DS_Store
+api_key.js
 *.swp
 **node_modules/

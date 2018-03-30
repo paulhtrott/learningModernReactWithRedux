@@ -3,12 +3,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import SearchBar from './components/search_bar';
-
-const API_KEY = ''
+import API_KEY from './../api_key';
 
 // Create a new Component. This component should product some HTML
 // Babel Repl -> http://babeljs.io/repl
 const App = () => {
+  console.log(API_KEY);
   return (
     <div>
       <SearchBar />
