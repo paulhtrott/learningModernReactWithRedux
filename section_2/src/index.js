@@ -1,22 +1,57 @@
+// Lodash
+import _ from 'lodash';
+
 // Define React and ReactDOM
-import React from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 
-import SearchBar from './components/search_bar';
+import YTSearch from 'youtube-api-search';
 import API_KEY from './../api_key';
 
-// Create a new Component. This component should product some HTML
-// Babel Repl -> http://babeljs.io/repl
-const App = () => {
-  console.log(API_KEY);
-  return (
-    <div>
-      <SearchBar />
-    </div>
-  );
+import SearchBar from './components/search_bar';
+import VideoDetail from './components/video_detail';
+import VideoList from './components/video_list';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      videos: [],
+      selectedVideo: null
+    };
+
+    this.videoSearch('reel attitude fishing paul trott');
+  }
+
+  videoSearch(term) {
+    YTSearch({key: API_KEY, term: term}, (videos) => {
+      this.setState({
+        videos: videos,
+        selectedVideo: videos[0]
+      });
+    });
+
+  }
+
+  render() {
+    //lodash module to throttle requests to search youtube
+    //npm install --save lodash
+    //gives a version of the function that can't be called until 300 milliseconds has passed
+    const videoSearch = _.debounce((term) => { this.videoSearch(term) }, 300);
+
+    return (
+      <div>
+        <SearchBar onSearchTermChange={videoSearch} />
+        <VideoDetail video={this.state.selectedVideo} />
+        <VideoList
+          onVideoSelect={selectedVideo => this.setState({selectedVideo})}
+          videos={this.state.videos} />
+      </div>
+    )
+  }
 };
 
-// Take the components generated html and put it on the page (in the DOM)
 ReactDOM.render(
   <App />,
   document.querySelector('.container')
