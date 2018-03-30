@@ -12,7 +12,6 @@ const App = () => {
   return (
     <div>
       <SearchBar />
-      <h1>Hello World</h1>
     </div>
   );
 };
