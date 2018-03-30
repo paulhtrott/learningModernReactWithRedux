@@ -8,17 +8,35 @@ import React, {Component} from 'react';
 //};
 
 // class based component (more aware component), only needed for more functionality
+// when you want state, among other things
 class SearchBar extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      term: ''
+    };
+  }
 
   //Naming - onElementEvent
   //or handleElementEvent
-  onInputChange(event) {
-    console.log(event.target.value);
-  }
+
+  //onInputChange(event) {
+  //  console.log(this);
+  //  console.log(event.target.value);
+  //  this.setState({
+  //    term: event.target.value
+  //  })
+  //}
+
 
   render() {
     return (
-      <input onChange={this.onInputChange} />
+      <div>
+        <input
+          value={this.state.term} // controlled field is a value set by a state
+          onChange={event => this.setState({term: event.target.value})} />
+      </div>
     );
   }
 }
